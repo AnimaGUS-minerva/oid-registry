@@ -1,7 +1,10 @@
-use std::collections::BTreeMap;
-use std::fs::File;
-use std::io::{BufRead, BufReader, Result, Write};
-use std::path::Path;
+//use std::collections::BTreeMap;
+//use std::fs::File;
+//use std::io::{BufRead, BufReader, Result, Write};
+//use std::path::Path;
+extern crate alloc;
+use alloc::{collections::BTreeMap, string::String, vec::Vec};
+
 
 /// Temporary structure, created when reading a file containing OID declarations
 #[derive(Debug)]
@@ -31,6 +34,7 @@ pub type LoadedMap = BTreeMap<String, Vec<LoadedEntry>>;
 /// `name` is used to declare a global constant when creating output file (see `generate_file`).
 /// If `name` is "" then no constant will be written
 ///
+#[cfg(feature = "use_std")]
 pub fn load_file<P: AsRef<Path>>(path: P) -> Result<LoadedMap> {
     let mut map = BTreeMap::new();
 
@@ -63,6 +67,7 @@ pub fn load_file<P: AsRef<Path>>(path: P) -> Result<LoadedMap> {
 }
 
 /// Generate a file containing a `with_<feat>` method for OidRegistry
+#[cfg(feature = "use_std")]
 pub fn generate_file<P: AsRef<Path>>(map: &LoadedMap, dest_path: P) -> Result<()> {
     let mut out_file = File::create(&dest_path)?;
     for feat_entries in map.values() {

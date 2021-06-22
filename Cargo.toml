@@ -27,6 +27,7 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [features]
 default = []
+use_std = []
 crypto = ["kdf","pkcs1","pkcs7","pkcs9","nist_algs","x962"]
 kdf = []
 ms_spc = []
@@ -39,3 +40,4 @@ x962 = []
 
 [dependencies]
 der-parser = "5.1"
+hashbrown = "0.11"

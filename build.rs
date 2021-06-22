@@ -2,6 +2,7 @@ use std::env;
 
 include!(concat!(env!("CARGO_MANIFEST_DIR"), "/src/load.rs"));
 
+#[cfg(feature = "use_std")]
 fn main() -> Result<()> {
     println!("cargo:rerun-if-changed=assets/oid_db.txt");
 
@@ -13,3 +14,5 @@ fn main() -> Result<()> {
 
     Ok(())
 }
+#[cfg(not(feature = "use_std"))]
+fn main() {} // shim

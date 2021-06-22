@@ -75,10 +75,14 @@
 // #![deny(intra_doc_link_resolution_failure)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
+#![no_std]
+
+#[macro_use]
+extern crate alloc;
+
 use der_parser::{oid, oid::Oid};
-use std::borrow::Cow;
-use std::collections::HashMap;
-use std::convert::From;
+use alloc::{borrow::Cow, string::String};
+use hashbrown::HashMap;
 
 mod load;
 
@@ -245,7 +249,7 @@ pub fn format_oid(oid: &Oid, registry: &OidRegistry) -> String {
     }
 }
 
-include!(concat!(env!("OUT_DIR"), "/oid_db.rs"));
+include!(concat!(env!("CARGO_MANIFEST_DIR"), "/oid_db_0.1.3.rs"));
 
 #[rustfmt::skip::macros(oid)]
 #[cfg(test)]
